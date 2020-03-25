@@ -1,0 +1,15 @@
+steps:
+  - name: 'gcr.io/$PROJECT_ID/android:${_ANDROID_VERSION}'
+    args:
+      - './gradlew'
+      - 'clean'
+      - 'assemble${_FLAVOR}'
+    id: 'assemble-debug'
+
+# artifactsはcp -r的なのがない & *.apkとかだとDirectoryを再帰までしない？
+artifacts:
+  objects:
+    location: 'gs://build-artifact-sample/android/'
+    paths: ['**/*.apk']
+ 
+timeout: 600s
